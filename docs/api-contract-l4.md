@@ -17,10 +17,6 @@
 
 ## 1. Tổng quan
 
-Tài liệu này mô tả API được đối chiếu trực tiếp từ source code trong repository `CDTN1_HHaDaiVi_2374802010551`.
-
-Backend hiện có một API nghiệp vụ để phân công kỹ thuật viên cho lịch hẹn và một route gốc dùng để kiểm tra ứng dụng đang hoạt động.
-
 ### 1.1. Công nghệ và kiến trúc
 
 | Thành phần | Công nghệ / file |
