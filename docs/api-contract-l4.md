@@ -37,9 +37,6 @@
 |---|---|---|---|
 | GET | `/` | Kiểm tra backend đang hoạt động | Đã khai báo |
 | PUT | `/api/appointments/{appointment_id}/assign` | Gán kỹ thuật viên cho lịch hẹn | Đã khai báo |
-
-**Lưu ý phạm vi:** Trong các controller và `app.py` có trong ZIP được rà soát, chỉ tìm thấy hai route trên. Các chức năng như tạo/xem/sửa/xóa lịch hẹn, xem lịch làm việc kỹ thuật viên, kiểm tra trùng lịch và gửi SMS chưa có endpoint tương ứng trong source đã nhận; giao diện React hoặc nội dung wireframe không được xem là API backend đã triển khai.
-
 ---
 
 ## 2. GET /
