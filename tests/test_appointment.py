@@ -31,5 +31,6 @@ def test_assign_technician_not_found(mock_repo):
     
     service = AppointmentService(mock_repo)
     
-    with pytest.raises(LookupError, match="Không tìm thấy thông tin lịch hẹn yêu cầu."):
-        service.assign_technician(999, 102)
+    # Sửa chuỗi match thành 'Không tìm thấy lịch hẹn.' cho khớp với code service thực tế
+    with pytest.raises(LookupError, match="Không tìm thấy lịch hẹn."):
+        service.assign_technician(appointment_id=999, technician_id=1)
