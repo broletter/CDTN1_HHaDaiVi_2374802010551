@@ -546,12 +546,3 @@ axios.put(
 
 Đây là lời gọi đến endpoint PUT đã khai báo trong Flask. Các màn hình lịch trình, cập nhật trạng thái công việc và xác nhận khách hàng trong giao diện hiện có dữ liệu hiển thị minh họa; không tìm thấy endpoint backend tương ứng trong các controller của project.
 
----
-
-<div align="center">
-
-**SMART CRM – MEKONG MOBILE**  
-*Tài liệu API Contract · Luồng nghiệp vụ L4*  
-*Được lập dựa trên source code trong repository ZIP do sinh viên cung cấp.*
-
-</div>
