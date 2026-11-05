@@ -8,33 +8,7 @@
 **Sinh viên:** Hà Đại Vĩ  
 **MSSV:** `2374802010551`
 
-[![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
-[![Flask](https://img.shields.io/badge/Backend-Flask-000000?logo=flask)](https://flask.palletsprojects.com/)
-[![React](https://img.shields.io/badge/Frontend-React-61DAFB?logo=react&logoColor=20232A)](https://react.dev/)
-[![Vite](https://img.shields.io/badge/Build-Vite-646CFF?logo=vite&logoColor=white)](https://vite.dev/)
-[![SQLite](https://img.shields.io/badge/Database-SQLite-003B57?logo=sqlite&logoColor=white)](https://www.sqlite.org/)
-
 </div>
-
----
-
-## 📌 Mục lục
-
-- [1. Giới thiệu dự án](#1-giới-thiệu-dự-án)
-- [2. Mục tiêu và phạm vi](#2-mục-tiêu-và-phạm-vi)
-- [3. Công nghệ sử dụng](#3-công-nghệ-sử-dụng)
-- [4. Kiến trúc hệ thống](#4-kiến-trúc-hệ-thống)
-- [5. Chức năng và luồng nghiệp vụ](#5-chức-năng-và-luồng-nghiệp-vụ)
-- [6. Cấu trúc dữ liệu](#6-cấu-trúc-dữ-liệu)
-- [7. API Backend](#7-api-backend)
-- [8. Cài đặt và chạy dự án](#8-cài-đặt-và-chạy-dự-án)
-- [9. Kiểm thử](#9-kiểm-thử)
-- [10. Giao diện minh chứng](#10-giao-diện-minh-chứng)
-- [11. Cấu trúc thư mục](#11-cấu-trúc-thư-mục)
-- [12. Giới hạn và hướng phát triển](#12-giới-hạn-và-hướng-phát-triển)
-- [13. Tài liệu tham khảo trong dự án](#13-tài-liệu-tham-khảo-trong-dự-án)
-
----
 
 ## 1. Giới thiệu dự án
 
