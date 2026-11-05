@@ -23,4 +23,9 @@ def assign_appointment(appointment_id):
     except LookupError as e:
         return jsonify({"success": False, "error": str(e)}), 404
     except Exception as e:
-        return jsonify({"success": False, "error": "Lỗi hệ thống nội bộ."}), 500
+        import traceback
+        traceback.print_exc()
+        return jsonify({
+            "success": False,
+            "error": str(e)
+        }), 500
