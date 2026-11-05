@@ -1,105 +1,112 @@
+# API Contract – Smart CRM Mekong Mobile
+
 <div align="center">
 
-# SMART CRM – MEKONG MOBILE
+## LUỒNG NGHIỆP VỤ L4
+### Phân công kỹ thuật viên và quản lý lịch hẹn
 
-### API CONTRACT · LUỒNG NGHIỆP VỤ L4
+**Sinh viên:** Hà Đại Vĩ  
+**MSSV:** `2374802010551`  
+**Track:** SE – Software Engineering
 
-**Phân công kỹ thuật viên & quản lý lịch hẹn**
-
-<br>
-
-| **Sinh viên** | **MSSV** | **Track** |
-|:---:|:---:|:---:|
-| Hà Đại Vĩ | `2374802010551` | Software Engineering |
-
-<br>
-
-![Backend](https://img.shields.io/badge/Backend-Flask-black?logo=flask)
-![Language](https://img.shields.io/badge/Language-Python-blue?logo=python)
-![Database](https://img.shields.io/badge/Database-SQLite-003B57?logo=sqlite)
-![Documentation](https://img.shields.io/badge/Docs-API%20Contract-2F6FEB)
+**Backend:** Flask · **ORM:** Flask-SQLAlchemy · **Database:** SQLite
 
 </div>
-
----
-
-> [!IMPORTANT]
-> **Phạm vi tài liệu:** Tài liệu này ghi nhận API phân công kỹ thuật viên dựa trên các đoạn mã đã được cung cấp và trao đổi. Không xem các endpoint minh họa hoặc chức năng chưa được xác minh là đã triển khai. Kết quả kiểm thử phải được cập nhật từ lần chạy thực tế.
-
-## 📑 Mục lục
-
-- [1. Tổng quan](#1-tổng-quan)
-- [2. Phạm vi triển khai đã xác nhận](#2-phạm-vi-triển-khai-đã-xác-nhận)
-- [3. API phân công kỹ thuật viên](#3-api-phân-công-kỹ-thuật-viên)
-  - [3.1. Endpoint](#31-endpoint)
-  - [3.2. Request](#32-request)
-  - [3.3. Response](#33-response)
-  - [3.4. Mã lỗi](#34-mã-lỗi)
-- [4. Quy trình xử lý](#4-quy-trình-xử-lý)
-- [5. Kiến trúc phân lớp](#5-kiến-trúc-phân-lớp)
-- [6. Quy tắc nghiệp vụ](#6-quy-tắc-nghiệp-vụ)
-- [7. Hướng dẫn chạy và kiểm thử](#7-hướng-dẫn-chạy-và-kiểm-thử)
-- [8. Các vấn đề gặp trong quá trình kiểm thử](#8-các-vấn-đề-gặp-trong-quá-trình-kiểm-thử)
-- [9. Giới hạn và hướng phát triển](#9-giới-hạn-và-hướng-phát-triển)
-- [10. Tài liệu liên quan](#10-tài-liệu-liên-quan)
 
 ---
 
 ## 1. Tổng quan
 
-Luồng nghiệp vụ **L4 – Phân công kỹ thuật viên và lịch hẹn** thuộc hệ thống Smart CRM – Mekong Mobile. Phần API được trao đổi trong tài liệu này tập trung vào việc gán kỹ thuật viên cho một lịch hẹn và cập nhật trạng thái lịch hẹn.
+Tài liệu này mô tả API được đối chiếu trực tiếp từ source code trong repository `CDTN1_HHaDaiVi_2374802010551`.
 
-### Công nghệ sử dụng
+Backend hiện có một API nghiệp vụ để phân công kỹ thuật viên cho lịch hẹn và một route gốc dùng để kiểm tra ứng dụng đang hoạt động.
 
-| Thành phần | Công nghệ / thư viện |
+### 1.1. Công nghệ và kiến trúc
+
+| Thành phần | Công nghệ / file |
 |---|---|
 | Ngôn ngữ | Python |
 | Backend framework | Flask |
-| ORM | SQLAlchemy |
-| Cơ sở dữ liệu phát triển | SQLite |
-| Kiến trúc | Controller – Service – Repository – Model |
-| Công cụ kiểm thử | PowerShell, `Invoke-RestMethod` |
+| ORM | Flask-SQLAlchemy / SQLAlchemy |
+| Cơ sở dữ liệu | SQLite |
+| Controller | `src/controllers/appointment_controller.py` |
+| Service | `src/services/appointment_service.py` |
+| Repository | `src/repositories/appointment_repository.py` |
+| Model | `src/models/appointment.py` |
+| Khởi tạo ứng dụng | `app.py` |
 
-## 2. Phạm vi triển khai đã xác nhận
+### 1.2. Danh sách endpoint tìm thấy trong source
 
-Dựa trên các đoạn mã đã được cung cấp trong quá trình làm việc:
+| Method | Endpoint | Chức năng | Trạng thái theo source |
+|---|---|---|---|
+| GET | `/` | Kiểm tra backend đang hoạt động | Đã khai báo |
+| PUT | `/api/appointments/{appointment_id}/assign` | Gán kỹ thuật viên cho lịch hẹn | Đã khai báo |
 
-| Thành phần | Trách nhiệm | Tình trạng |
-|---|---|:---:|
-| `appointment_controller.py` | Nhận request phân công và trả JSON response | Có đoạn mã |
-| `appointment_service.py` | Kiểm tra dữ liệu, lịch hẹn, kỹ thuật viên và gọi Repository | Có đoạn mã |
-| `appointment_repository.py` | Truy vấn lịch hẹn/kỹ thuật viên và cập nhật dữ liệu | Có đoạn mã |
-| `appointment.py` | Khai báo model `Appointment`, `Technician` và `db` | Chưa rà soát đầy đủ |
+**Lưu ý phạm vi:** Trong các controller và `app.py` có trong ZIP được rà soát, chỉ tìm thấy hai route trên. Các chức năng như tạo/xem/sửa/xóa lịch hẹn, xem lịch làm việc kỹ thuật viên, kiểm tra trùng lịch và gửi SMS chưa có endpoint tương ứng trong source đã nhận; giao diện React hoặc nội dung wireframe không được xem là API backend đã triển khai.
 
-> [!NOTE]
-> Bảng này phản ánh các đoạn mã đã được chia sẻ trong cuộc trao đổi, không phải kết quả kiểm tra tự động toàn bộ repository. Cần đối chiếu source code hiện tại trước khi nộp báo cáo.
+---
 
-## 3. API phân công kỹ thuật viên
+## 2. GET /
 
-### 3.1. Endpoint
+### Mục đích
 
-<div align="center">
+Kiểm tra Flask backend đã khởi động và có thể nhận request hay chưa.
+
+### Request
+
+```http
+GET /
+```
+
+Không yêu cầu Path Parameter, Query Parameter hoặc Request Body.
+
+### Response – 200 OK
+
+```json
+{
+  "message": "Mekong Mobile Smart CRM API - Module L4 is running!"
+}
+```
+
+### Nguồn triển khai
+
+Route được khai báo trực tiếp trong `app.py`:
+
+```python
+@app.route('/')
+def home():
+    return {"message": "Mekong Mobile Smart CRM API - Module L4 is running!"}, 200
+```
+
+---
+
+## 3. PUT /api/appointments/{appointment_id}/assign
+
+### Mục đích
+
+Phân công một kỹ thuật viên cho một lịch hẹn có sẵn. API cập nhật `technician_id` và chuyển trạng thái lịch hẹn thành `Assigned`.
+
+### 3.1. Thông tin endpoint
 
 | Thuộc tính | Giá trị |
-|:---|:---|
-| **HTTP Method** | `PUT` |
-| **Endpoint** | `/api/appointments/{appointment_id}/assign` |
-| **Content-Type** | `application/json` |
-| **Chức năng** | Phân công kỹ thuật viên cho lịch hẹn |
+|---|---|
+| HTTP Method | `PUT` |
+| Endpoint | `/api/appointments/{appointment_id}/assign` |
+| Content-Type | `application/json` |
+| Path Parameter | `appointment_id` |
+| Chức năng | Phân công kỹ thuật viên cho lịch hẹn |
 
-</div>
-
-**Mô tả:** API tiếp nhận mã lịch hẹn trên URL và mã kỹ thuật viên trong request body. Sau khi kiểm tra dữ liệu, hệ thống cập nhật kỹ thuật viên phụ trách và trạng thái lịch hẹn thành `Assigned`.
-
-### 3.2. Request
-
-**Path parameter**
+### 3.2. Path Parameter
 
 | Tên | Kiểu dữ liệu | Bắt buộc | Mô tả |
-|---|---|:---:|---|
-| `appointment_id` | Integer | Có | ID lịch hẹn cần phân công |
+|---|---|---|---|
+| `appointment_id` | Integer | Có | ID của lịch hẹn cần phân công |
 
-**Request body**
+Flask khai báo `<int:appointment_id>`, vì vậy giá trị trên URL phải được chuyển đổi thành số nguyên. URL không khớp kiểu này sẽ không đi vào hàm xử lý của endpoint.
+
+### 3.3. Request Body
+
+Ví dụ:
 
 ```http
 PUT /api/appointments/1/assign
@@ -113,43 +120,77 @@ Content-Type: application/json
 ```
 
 | Trường | Kiểu dữ liệu | Bắt buộc | Mô tả |
-|---|---|:---:|---|
-| `technician_id` | Integer | Có | ID kỹ thuật viên được phân công |
+|---|---|---|---|
+| `technician_id` | Integer | Có | ID kỹ thuật viên cần phân công |
 
-### 3.3. Response
+Trong Controller, dữ liệu được đọc bằng `request.get_json() or {}` và lấy trường `technician_id`.
 
-<details>
-<summary><strong>200 OK</strong> — Phân công thành công (response minh họa)</summary>
+### 3.4. Quy trình xử lý
+
+1. Client gửi request `PUT` kèm `appointment_id` trên URL.
+2. Controller đọc `technician_id` từ JSON body.
+3. Service kiểm tra `appointment_id` và `technician_id` không bị thiếu hoặc có giá trị falsy.
+4. Repository tìm lịch hẹn theo `appointment_id`.
+5. Nếu không tìm thấy lịch hẹn, Service phát sinh `LookupError`.
+6. Repository tìm kỹ thuật viên theo `technician_id`.
+7. Nếu không tìm thấy kỹ thuật viên, Service phát sinh `LookupError`.
+8. Repository cập nhật `appointment.technician_id` và `appointment.status = "Assigned"`.
+9. Repository gọi `db.session.commit()` để lưu thay đổi.
+10. Controller trả JSON với HTTP `200`.
+
+### 3.5. Response – 200 OK
+
+Controller trả về object theo cấu trúc:
 
 ```json
 {
   "success": true,
   "data": {
-    "appointment_id": 1,
-    "technician_id": 1,
-    "status": "Assigned"
+    "id": 1,
+    "customer_name": "Nguyễn Văn Minh",
+    "device_info": "iPhone 14",
+    "appointment_date": "2025-09-10 09:00:00",
+    "status": "Assigned",
+    "technician_id": 1
   }
 }
 ```
 
-Các trường trong `data` phụ thuộc vào phương thức `Appointment.to_dict()` thực tế của project.
+Đây là ví dụ minh họa định dạng dữ liệu. Giá trị và dữ liệu cụ thể phụ thuộc vào bản ghi thực tế trong SQLite. Các trường trong `data` căn cứ theo phương thức `Appointment.to_dict()` trong model.
 
-</details>
+### 3.6. Error – 400 Bad Request
 
-<details>
-<summary><strong>400 Bad Request</strong> — Dữ liệu đầu vào không hợp lệ</summary>
+Xảy ra khi Service nhận `appointment_id` hoặc `technician_id` không có giá trị hợp lệ theo kiểm tra `if not ...`.
+
+Ví dụ thiếu `technician_id`:
+
+**Request**
+
+```http
+PUT /api/appointments/1/assign
+Content-Type: application/json
+```
+
+```json
+{}
+```
+
+**Response**
 
 ```json
 {
   "success": false,
-  "error": "Thiếu mã kỹ thuật viên."
+  "error": "Mã lịch hẹn và mã kỹ thuật viên không được để trống."
 }
 ```
 
-</details>
+Lưu ý: nội dung thông báo là chuỗi được khai báo trong `AppointmentService`.
 
-<details>
-<summary><strong>404 Not Found</strong> — Không tìm thấy dữ liệu</summary>
+### 3.7. Error – 404 Not Found
+
+Xảy ra khi không tìm thấy lịch hẹn hoặc kỹ thuật viên tương ứng.
+
+**Trường hợp không tìm thấy lịch hẹn:**
 
 ```json
 {
@@ -158,73 +199,147 @@ Các trường trong `data` phụ thuộc vào phương thức `Appointment.to_d
 }
 ```
 
-Thông báo cụ thể phụ thuộc vào việc không tìm thấy lịch hẹn hay kỹ thuật viên.
-
-</details>
-
-<details>
-<summary><strong>500 Internal Server Error</strong> — Lỗi hệ thống</summary>
+**Trường hợp không tìm thấy kỹ thuật viên:**
 
 ```json
 {
   "success": false,
-  "error": "Lỗi hệ thống nội bộ."
+  "error": "Không tìm thấy kỹ thuật viên."
 }
 ```
 
-</details>
+Nếu Repository không trả dữ liệu sau khi cập nhật, Service cũng phát sinh `LookupError` với thông báo:
 
-> [!WARNING]
-> Các JSON response ở trên mô tả cấu trúc phản hồi dự kiến theo Controller đã trao đổi. Chỉ sử dụng làm kết quả thực tế trong báo cáo sau khi chạy API và xác nhận output.
-
-### 3.4. Mã lỗi HTTP
-
-| HTTP status | Ý nghĩa | Điều kiện |
-|:---:|---|---|
-| `200` | OK | Cập nhật phân công thành công |
-| `400` | Bad Request | JSON không hợp lệ hoặc thiếu mã kỹ thuật viên |
-| `404` | Not Found | Không tìm thấy lịch hẹn hoặc kỹ thuật viên |
-| `500` | Internal Server Error | Lỗi ngoài dự kiến trong quá trình xử lý |
-
-## 4. Quy trình xử lý
-
-```mermaid
-flowchart TD
-    A[Client gửi PUT request] --> B[Appointment Controller]
-    B --> C{JSON hợp lệ và có technician_id?}
-    C -- Không --> D[Trả HTTP 400]
-    C -- Có --> E[Appointment Service]
-    E --> F[Repository tìm lịch hẹn]
-    F --> G{Lịch hẹn tồn tại?}
-    G -- Không --> H[Trả HTTP 404]
-    G -- Có --> I[Repository tìm kỹ thuật viên]
-    I --> J{Kỹ thuật viên tồn tại?}
-    J -- Không --> H
-    J -- Có --> K[Cập nhật technician_id và status]
-    K --> L[Commit database]
-    L --> M[Trả JSON HTTP 200]
+```json
+{
+  "success": false,
+  "error": "Không thể cập nhật phân công."
+}
 ```
 
-## 5. Kiến trúc phân lớp
+### 3.8. Error – 500 Internal Server Error
 
-Luồng xử lý được tách thành các lớp để phân chia trách nhiệm và hỗ trợ bảo trì.
+Controller có nhánh `except Exception` để bắt lỗi ngoài dự kiến:
 
-| Lớp | File / thành phần | Trách nhiệm |
+```json
+{
+  "success": false,
+  "error": "Nội dung lỗi phát sinh"
+}
+```
+
+Giá trị `error` thực tế được lấy từ `str(e)`, vì vậy có thể thay đổi tùy lỗi. Controller cũng in traceback ra Terminal.
+
+**Lưu ý kỹ thuật:** Với code hiện tại, JSON sai định dạng có thể phát sinh `BadRequest` trong `request.get_json()`. Vì ngoại lệ này không được bắt riêng thành HTTP 400 mà rơi vào `except Exception`, Controller có thể trả HTTP 500. Không nên ghi nhận JSON sai định dạng chắc chắn trả 400 nếu chưa sửa code hoặc kiểm thử xác nhận.
+
+### 3.9. Bảng mã HTTP
+
+| HTTP status | Ý nghĩa | Điều kiện theo code |
 |---|---|---|
-| Controller | `appointment_controller.py` | Nhận HTTP request, gọi Service, tạo JSON response |
-| Service | `appointment_service.py` | Kiểm tra dữ liệu và điều phối nghiệp vụ |
-| Repository | `appointment_repository.py` | Truy vấn, cập nhật dữ liệu qua SQLAlchemy |
-| Model | `src/models/appointment.py` | Đại diện dữ liệu `Appointment`, `Technician` và database |
+| `200` | OK | Cập nhật phân công thành công |
+| `400` | Bad Request | Service phát sinh `ValueError` do thiếu ID |
+| `404` | Not Found | Service phát sinh `LookupError` khi không tìm thấy dữ liệu hoặc không cập nhật được |
+| `500` | Internal Server Error | Ngoại lệ khác được Controller bắt tại `except Exception` |
 
-### 5.1. Controller
+---
 
-Blueprint được khai báo:
+## 4. Quy tắc nghiệp vụ
+
+Các quy tắc dưới đây chỉ mô tả điều kiện có trong source code hiện tại.
+
+| Mã | Quy tắc | Căn cứ source |
+|---|---|---|
+| BR1 | Mã lịch hẹn và mã kỹ thuật viên không được để trống. | `AppointmentService.assign_technician()` |
+| BR2 | Lịch hẹn phải tồn tại trước khi phân công. | `repository.find_by_id()` |
+| BR3 | Kỹ thuật viên phải tồn tại trước khi phân công. | `repository.find_technician_by_id()` |
+| BR4 | Khi phân công thành công, cập nhật `technician_id` cho lịch hẹn. | `AppointmentRepository.update_technician()` |
+| BR5 | Trạng thái lịch hẹn sau khi phân công được đặt thành `Assigned`. | Service truyền `status="Assigned"` |
+| BR6 | Thay đổi được lưu bằng `db.session.commit()`. | Repository |
+
+### 4.1. Các điều kiện chưa thấy triển khai trong source
+
+Không tìm thấy logic tương ứng trong Service/Repository hiện tại cho các điều kiện sau:
+
+- Kiểm tra kỹ thuật viên có trạng thái `Available` trước khi phân công.
+- Kiểm tra kỹ thuật viên có đúng chuyên môn với thiết bị/sự cố.
+- Kiểm tra kỹ thuật viên thuộc cùng trung tâm hoặc khu vực.
+- Kiểm tra giới hạn khối lượng công việc.
+- Kiểm tra lịch hẹn bị trùng thời gian.
+- Kiểm tra lịch hẹn chỉ được phân công khi đang ở trạng thái `Pending`.
+- Ghi nhận lý do thay đổi kỹ thuật viên.
+- Gửi SMS hoặc thông báo cho khách hàng.
+
+Model có trường `Technician.status`, nhưng việc có trường dữ liệu không đồng nghĩa API đã kiểm tra trường đó trong nghiệp vụ phân công.
+
+---
+
+## 5. Cấu trúc dữ liệu liên quan
+
+### 5.1. Model Technician
+
+Bảng: `technicians`
+
+| Trường | Kiểu dữ liệu | Ràng buộc / mặc định | Mô tả |
+|---|---|---|---|
+| `id` | Integer | Primary Key | Mã kỹ thuật viên |
+| `name` | String(100) | NOT NULL | Họ tên kỹ thuật viên |
+| `specialty` | String(100) | Nullable | Chuyên môn sửa chữa |
+| `status` | String(50) | Default `Available` | Trạng thái kỹ thuật viên |
+
+Giá trị `status` được ghi chú trong model gồm `Available`, `Busy`, `Offline`.
+
+### 5.2. Model Appointment
+
+Bảng: `appointments`
+
+| Trường | Kiểu dữ liệu | Ràng buộc / mặc định | Mô tả |
+|---|---|---|---|
+| `id` | Integer | Primary Key | Mã lịch hẹn |
+| `customer_name` | String(100) | NOT NULL | Tên khách hàng |
+| `device_info` | String(150) | NOT NULL | Thông tin thiết bị mang đi sửa |
+| `appointment_date` | DateTime | NOT NULL, default `datetime.utcnow` | Ngày giờ hẹn |
+| `status` | String(50) | Default `Pending` | Trạng thái lịch hẹn |
+| `technician_id` | Integer | Nullable, Foreign Key → `technicians.id` | Kỹ thuật viên được phân công |
+
+Các trạng thái được ghi chú trong model gồm `Pending`, `Assigned`, `Completed`, `Cancelled`.
+
+### 5.3. Dữ liệu trả về của Appointment
+
+Phương thức `to_dict()` trả về:
+
+```json
+{
+  "id": 1,
+  "customer_name": "Nguyễn Văn Minh",
+  "device_info": "iPhone 14",
+  "appointment_date": "2025-09-10 09:00:00",
+  "status": "Assigned",
+  "technician_id": 1
+}
+```
+
+`appointment_date` được định dạng chuỗi `YYYY-MM-DD HH:MM:SS`.
+
+---
+
+## 6. Kiến trúc phân lớp
+
+| Lớp | File | Trách nhiệm |
+|---|---|---|
+| Controller | `src/controllers/appointment_controller.py` | Nhận HTTP request, gọi Service, trả JSON và HTTP status |
+| Service | `src/services/appointment_service.py` | Kiểm tra đầu vào, kiểm tra tồn tại và điều phối nghiệp vụ |
+| Repository | `src/repositories/appointment_repository.py` | Truy vấn/cập nhật model và commit database |
+| Model | `src/models/appointment.py` | Khai báo SQLAlchemy model `Appointment`, `Technician` và `db` |
+
+### 6.1. Controller
+
+Blueprint:
 
 ```python
 appointment_bp = Blueprint('appointment', __name__)
 ```
 
-Route phân công:
+Route:
 
 ```python
 @appointment_bp.route(
@@ -235,97 +350,74 @@ def assign_appointment(appointment_id):
     ...
 ```
 
-Controller tiếp nhận `appointment_id`, đọc `technician_id` từ JSON, gọi Service và trả kết quả theo mã HTTP.
+### 6.2. Service
 
-### 5.2. Service
+Phương thức nghiệp vụ chính:
 
-`AppointmentService` thực hiện các bước:
+```python
+AppointmentService.assign_technician(appointment_id, technician_id)
+```
 
-1. Kiểm tra `appointment_id` và `technician_id` không bị thiếu.
-2. Gọi `find_by_id()` để kiểm tra lịch hẹn.
-3. Gọi `find_technician_by_id()` để kiểm tra kỹ thuật viên.
-4. Gọi `update_technician()` để cập nhật phân công.
-5. Trả dữ liệu sau cập nhật cho Controller.
+Service kiểm tra dữ liệu, kiểm tra sự tồn tại của hai đối tượng và yêu cầu Repository cập nhật phân công.
 
-### 5.3. Repository
-
-Các phương thức đã được chia sẻ:
+### 6.3. Repository
 
 | Phương thức | Chức năng |
 |---|---|
 | `find_by_id(appointment_id)` | Tìm lịch hẹn theo ID |
 | `find_technician_by_id(technician_id)` | Tìm kỹ thuật viên theo ID |
-| `update_technician(appointment_id, technician_id, status)` | Cập nhật kỹ thuật viên và trạng thái lịch hẹn |
+| `update_technician(appointment_id, technician_id, status)` | Cập nhật kỹ thuật viên và trạng thái lịch hẹn, sau đó commit |
 
-Đoạn cập nhật dữ liệu:
+### 6.4. Khởi tạo ứng dụng
 
-```python
-appointment.technician_id = technician_id
-appointment.status = status
+`app.py` thực hiện:
 
-db.session.commit()
+- Tạo Flask application.
+- Cấu hình SQLite bằng `sqlite:///mekong_crm.db`.
+- Khởi tạo SQLAlchemy.
+- Đăng ký `appointment_bp`.
+- Tạo bảng bằng `db.create_all()` trong khối chạy trực tiếp.
+- Chạy Flask ở port `5000` với `debug=True`.
 
-return appointment.to_dict()
-```
-
-## 6. Quy tắc nghiệp vụ
-
-| Mã | Quy tắc |
-|---|---|
-| BR1 | Mã lịch hẹn và mã kỹ thuật viên không được để trống. |
-| BR2 | Lịch hẹn phải tồn tại trước khi cập nhật phân công. |
-| BR3 | Kỹ thuật viên phải tồn tại trước khi cập nhật phân công. |
-| BR4 | Khi cập nhật thành công, `technician_id` được gán cho lịch hẹn. |
-| BR5 | Trạng thái lịch hẹn được cập nhật thành `Assigned`. |
-| BR6 | Thay đổi phải được commit vào cơ sở dữ liệu. |
-
-> [!IMPORTANT]
-> Trong các đoạn code đã trao đổi, chưa có đủ căn cứ để xác nhận các điều kiện nâng cao như kỹ thuật viên `AVAILABLE`, cùng trung tâm, proficiency, giới hạn workload hoặc kiểm tra trùng lịch. Không mô tả các điều kiện này là đã triển khai nếu chưa kiểm tra source code.
+---
 
 ## 7. Hướng dẫn chạy và kiểm thử
 
-### 7.1. Chuẩn bị môi trường
+### 7.1. Cài đặt môi trường
 
-Mở Terminal tại thư mục gốc của repository.
-
-Kích hoạt môi trường ảo:
-
-```powershell
-.\.venv\Scripts\Activate.ps1
-```
-
-Nếu môi trường ảo chưa được tạo:
+Tại thư mục gốc project:
 
 ```powershell
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
-```
-
-Cài đặt thư viện:
-
-```powershell
 pip install -r requirements.txt
 ```
 
-### 7.2. Khởi động Backend
-
-Tại **Terminal 1**:
+### 7.2. Khởi động backend
 
 ```powershell
 python app.py
 ```
 
-Khi Flask khởi động thành công, Terminal hiển thị địa chỉ tương tự:
+Theo cấu hình trong `app.py`, Flask chạy tại:
 
 ```text
-Running on http://127.0.0.1:5000
+http://127.0.0.1:5000
 ```
 
-Giữ Terminal này hoạt động trong suốt quá trình kiểm thử.
+Khi chạy trực tiếp, ứng dụng gọi `db.create_all()` để tạo các bảng chưa tồn tại.
 
-### 7.3. Kiểm thử phân công thành công
+### 7.3. Kiểm tra backend
 
-Mở **Terminal 2** và gửi request:
+```powershell
+Invoke-RestMethod -Uri "http://127.0.0.1:5000/" -Method GET
+```
+
+Kết quả mong đợi: object JSON có trường `message` thông báo API đang hoạt động.
+
+### 7.4. Kiểm thử phân công thành công
+
+Cần bảo đảm database có lịch hẹn ID `1` và kỹ thuật viên ID `1` trước khi chạy:
 
 ```powershell
 $body = @{ technician_id = 1 } | ConvertTo-Json
@@ -337,158 +429,129 @@ Invoke-RestMethod `
     -Body $body
 ```
 
-**Kết quả mong đợi:** Khi lịch hẹn ID `1` và kỹ thuật viên ID `1` tồn tại, thao tác cập nhật thành công và API trả về `success: true`.
+Kết quả mong đợi khi hai bản ghi tồn tại: HTTP `200`, `success = true`, dữ liệu lịch hẹn nằm trong `data`.
 
-### 7.4. Kiểm thử thiếu mã kỹ thuật viên
+### 7.5. Kiểm thử thiếu technician_id
 
 ```powershell
 $body = @{} | ConvertTo-Json
 
-Invoke-RestMethod `
-    -Uri "http://127.0.0.1:5000/api/appointments/1/assign" `
-    -Method PUT `
-    -ContentType "application/json" `
-    -Body $body
+try {
+    Invoke-RestMethod `
+        -Uri "http://127.0.0.1:5000/api/appointments/1/assign" `
+        -Method PUT `
+        -ContentType "application/json" `
+        -Body $body
+}
+catch {
+    $_.Exception.Response.StatusCode
+}
 ```
 
-**Kết quả mong đợi:** HTTP `400 Bad Request` nếu Controller có kiểm tra thiếu `technician_id` trước khi gọi Service.
+Kết quả mong đợi: HTTP `400`, do Service phát sinh `ValueError`.
 
-### 7.5. Kiểm thử lịch hẹn không tồn tại
+### 7.6. Kiểm thử lịch hẹn không tồn tại
 
 ```powershell
 $body = @{ technician_id = 1 } | ConvertTo-Json
 
-Invoke-RestMethod `
-    -Uri "http://127.0.0.1:5000/api/appointments/9999/assign" `
-    -Method PUT `
-    -ContentType "application/json" `
-    -Body $body
+try {
+    Invoke-RestMethod `
+        -Uri "http://127.0.0.1:5000/api/appointments/9999/assign" `
+        -Method PUT `
+        -ContentType "application/json" `
+        -Body $body
+}
+catch {
+    $_.Exception.Response.StatusCode
+}
 ```
 
-**Kết quả mong đợi:** HTTP `404 Not Found` nếu lịch hẹn ID `9999` không tồn tại và Controller ánh xạ `LookupError` thành HTTP 404.
+Kết quả mong đợi: HTTP `404` nếu ID `9999` không tồn tại.
 
-### 7.6. Kiểm thử kỹ thuật viên không tồn tại
+### 7.7. Kiểm thử kỹ thuật viên không tồn tại
+
+Điều kiện: lịch hẹn ID `1` tồn tại, kỹ thuật viên ID `9999` không tồn tại.
 
 ```powershell
 $body = @{ technician_id = 9999 } | ConvertTo-Json
 
-Invoke-RestMethod `
-    -Uri "http://127.0.0.1:5000/api/appointments/1/assign" `
-    -Method PUT `
-    -ContentType "application/json" `
-    -Body $body
-```
-
-**Kết quả mong đợi:** HTTP `404 Not Found` nếu lịch hẹn ID `1` tồn tại nhưng kỹ thuật viên ID `9999` không tồn tại.
-
-### 7.7. Bảng test case
-
-| Test case | Dữ liệu kiểm thử | Kết quả mong đợi |
-|---|---|:---:|
-| TC01 | Lịch hẹn và kỹ thuật viên tồn tại | `200` |
-| TC02 | Thiếu `technician_id` | `400` |
-| TC03 | Lịch hẹn không tồn tại | `404` |
-| TC04 | Kỹ thuật viên không tồn tại | `404` |
-| TC05 | JSON sai định dạng | `400` |
-
-> [!TIP]
-> `Invoke-RestMethod` có thể hiển thị HTTP error dưới dạng lỗi PowerShell thay vì output thông thường. Khi cần lưu mã trạng thái và response body để làm minh chứng, hãy bắt lỗi bằng `try/catch` và đọc thông tin từ `Exception.Response`.
-
-**Mẫu ghi nhận kết quả thực tế**
-
-| Test case | HTTP thực tế | Pass/Fail | Ảnh minh chứng |
-|---|---|---|---|
-| TC01 | Chưa ghi nhận | Chưa kiểm thử | Bổ sung sau |
-| TC02 | Chưa ghi nhận | Chưa kiểm thử | Bổ sung sau |
-| TC03 | Chưa ghi nhận | Chưa kiểm thử | Bổ sung sau |
-| TC04 | Chưa ghi nhận | Chưa kiểm thử | Bổ sung sau |
-| TC05 | Chưa ghi nhận | Chưa kiểm thử | Bổ sung sau |
-
-## 8. Các vấn đề gặp trong quá trình kiểm thử
-
-### 8.1. Không kết nối được tới cổng API
-
-Ví dụ:
-
-```text
-curl: (7) Failed to connect to 127.0.0.1 port 5173
-```
-
-**Nguyên nhân:** Request được gửi tới cổng không có Backend đang lắng nghe hoặc Flask chưa được khởi động.
-
-**Cách xử lý:** Kiểm tra URL và cổng Flask hiển thị trong Terminal. Trong lần chạy đã trao đổi, Flask hiển thị `127.0.0.1:5000`; cổng `5173` thường được dùng cho frontend Vite, không phải API Flask trong cấu hình này.
-
-### 8.2. Endpoint không tồn tại
-
-Ví dụ:
-
-```text
-HTTP/1.1 404 NOT FOUND
-```
-
-Khi gọi `GET /appointments`, Flask trả về 404 vì chưa có bằng chứng route GET này được khai báo. Việc Flask khởi động thành công không đồng nghĩa mọi URL đều tồn tại.
-
-### 8.3. JSON không đúng định dạng
-
-Ví dụ:
-
-```text
-Failed to decode JSON object
-```
-
-**Nguyên nhân:** Request body không được truyền dưới dạng JSON hợp lệ.
-
-**Cách xử lý:** Tạo JSON bằng `ConvertTo-Json` và gửi với `Content-Type: application/json` thông qua `Invoke-RestMethod`.
-
-### 8.4. Không tìm thấy lịch hẹn
-
-Ví dụ:
-
-```json
-{
-  "success": false,
-  "error": "Không tìm thấy lịch hẹn."
+try {
+    Invoke-RestMethod `
+        -Uri "http://127.0.0.1:5000/api/appointments/1/assign" `
+        -Method PUT `
+        -ContentType "application/json" `
+        -Body $body
+}
+catch {
+    $_.Exception.Response.StatusCode
 }
 ```
 
-**Nguyên nhân có thể:** ID lịch hẹn không tồn tại trong database mà ứng dụng đang kết nối.
+Kết quả mong đợi: HTTP `404`.
 
-**Cách xử lý:** Kiểm tra dữ liệu SQLite và cấu hình database. Đây là lỗi dữ liệu nghiệp vụ, không có nghĩa Flask không hoạt động.
+### 7.8. Bảng test case
 
-## 9. Giới hạn và hướng phát triển
+| Test case | Dữ liệu kiểm thử | HTTP mong đợi | Ghi chú |
+|---|---|---:|---|
+| TC01 | Lịch hẹn và kỹ thuật viên tồn tại | 200 | Phân công thành công |
+| TC02 | Body `{}` | 400 | Thiếu `technician_id` |
+| TC03 | `appointment_id` không tồn tại | 404 | Không tìm thấy lịch hẹn |
+| TC04 | `technician_id` không tồn tại | 404 | Không tìm thấy kỹ thuật viên |
+| TC05 | JSON sai định dạng | Cần xác minh | Code hiện tại có thể rơi vào nhánh 500 |
 
-Các nội dung cần tiếp tục xác minh hoặc phát triển:
+**Chú ý:** Đây là kết quả mong đợi suy ra từ code, không phải kết quả kiểm thử đã chạy. Cần cập nhật Pass/Fail và ảnh minh chứng sau khi thực thi trên máy.
 
-- Kiểm tra đầy đủ model `Appointment` và `Technician`.
-- Xác nhận cấu hình database mà Flask đang sử dụng.
-- Bổ sung hoặc xác minh điều kiện kỹ thuật viên khả dụng.
-- Bổ sung hoặc xác minh điều kiện cùng trung tâm và proficiency.
-- Kiểm tra giới hạn phân công đang hoạt động.
-- Bổ sung kiểm tra trùng lịch hẹn.
-- Phát triển chức năng thay đổi kỹ thuật viên và lưu lý do.
-- Bổ sung các API xem danh sách công việc và lịch hẹn của kỹ thuật viên.
-- Hoàn thiện Unit Test và Integration Test.
+---
 
-Các chức năng chưa có bằng chứng trong mã nguồn không được ghi nhận là đã hoàn thành.
+## 8. Giới hạn triển khai và hướng phát triển
 
-## 10. Tài liệu liên quan
+Các chức năng sau có thể là hướng phát triển tiếp theo, nhưng chưa có route backend tương ứng trong source ZIP đã rà soát:
 
-| Tài liệu | Nội dung |
+- API tạo, xem danh sách, xem chi tiết, cập nhật và xóa lịch hẹn.
+- API lấy danh sách kỹ thuật viên và lọc kỹ thuật viên phù hợp.
+- Kiểm tra trạng thái khả dụng, chuyên môn và workload của kỹ thuật viên.
+- Kiểm tra trùng lịch hẹn theo thời gian.
+- API xem lịch làm việc/công việc của từng kỹ thuật viên.
+- API cập nhật trạng thái công việc.
+- Gửi SMS/thông báo xác nhận lịch hẹn cho khách hàng.
+- Kiểm tra dữ liệu JSON sai định dạng và chuẩn hóa response lỗi 400.
+- Bổ sung kiểm thử tích hợp với SQLite và kiểm thử các trường hợp lỗi.
+
+---
+
+## 9. Tài liệu và mã nguồn liên quan
+
+| File | Vai trò |
 |---|---|
-| `app.py` | Khởi tạo ứng dụng Flask và đăng ký Blueprint |
-| `src/controllers/` | Các API Controller |
-| `src/services/appointment_service.py` | Logic phân công lịch hẹn |
+| `app.py` | Khởi tạo Flask, SQLite, SQLAlchemy và đăng ký Blueprint |
+| `src/controllers/appointment_controller.py` | Khai báo API phân công lịch hẹn |
+| `src/services/appointment_service.py` | Logic phân công kỹ thuật viên |
 | `src/repositories/appointment_repository.py` | Truy vấn và cập nhật dữ liệu |
-| `src/models/appointment.py` | Model Appointment, Technician và database |
-| `requirements.txt` | Danh sách thư viện Python |
-| `tests/` | Các bài kiểm thử của hệ thống |
+| `src/models/appointment.py` | Model Appointment, Technician và cấu hình SQLAlchemy |
+| `tests/test_appointment.py` | Unit test cho Service phân công kỹ thuật viên |
+| `requirements.txt` | Danh sách thư viện backend |
+| `frontend/src/App.jsx` | Giao diện React gọi API phân công |
+
+### Phân biệt API backend và giao diện frontend
+
+Trong `frontend/src/App.jsx`, nút xác nhận gọi:
+
+```javascript
+axios.put(
+  `http://127.0.0.1:5000/api/appointments/1/assign`,
+  { technician_id: selectedTech || 1 }
+);
+```
+
+Đây là lời gọi đến endpoint PUT đã khai báo trong Flask. Các màn hình lịch trình, cập nhật trạng thái công việc và xác nhận khách hàng trong giao diện hiện có dữ liệu hiển thị minh họa; không tìm thấy endpoint backend tương ứng trong các controller của project.
 
 ---
 
 <div align="center">
 
-**SMART CRM – MEKONG MOBILE**
-
-*Tài liệu API Contract · Luồng nghiệp vụ L4*
+**SMART CRM – MEKONG MOBILE**  
+*Tài liệu API Contract · Luồng nghiệp vụ L4*  
+*Được lập dựa trên source code trong repository ZIP do sinh viên cung cấp.*
 
 </div>
