@@ -21,8 +21,6 @@ Dự án gồm hai phần chính:
 - **Backend:** Flask cung cấp API phân công kỹ thuật viên, xử lý nghiệp vụ qua các lớp Controller, Service, Repository và Model.
 - **Frontend:** React kết hợp Vite xây dựng giao diện điều phối, xem lịch trình kỹ thuật viên và màn hình xác nhận.
 
-> **Lưu ý về phạm vi hiện tại:** Source code trong repository mới hiện thực API cập nhật kỹ thuật viên cho một lịch hẹn (`PUT /api/appointments/{id}/assign`). Các màn hình Ticket, lịch trình và xác nhận trên Frontend hiện sử dụng dữ liệu minh họa tĩnh; không phải tất cả nội dung trên giao diện đều được tải hoặc lưu qua API.
-
 ## 2. Mục tiêu và phạm vi
 
 ### 2.1. Mục tiêu
