@@ -499,9 +499,3 @@ CDTN1_HHaDaiVi_2374802010551-main/
 
 ---
 
-<div align="center">
-
-**SMART CRM – MEKONG MOBILE**  
-*L4 · Technician Assignment & Appointment Management*
-
-</div>
