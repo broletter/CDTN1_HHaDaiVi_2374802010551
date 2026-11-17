@@ -12,4 +12,3 @@
 
 ---
 
-**Ghi chú:** Checklist phản ánh trạng thái bảo mật hiện tại của dự án BT3 trong phạm vi Prototype, không đồng nghĩa với việc hệ thống đã đáp ứng đầy đủ các tiêu chuẩn bảo mật khi triển khai Production.
