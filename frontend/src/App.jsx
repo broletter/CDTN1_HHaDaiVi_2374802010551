@@ -37,8 +37,8 @@ function App() {
       <header style={{ backgroundColor: '#102a43', color: 'white', padding: '15px 25px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <h2 style={{ margin: 0, fontSize: '18px' }}>SMART CRM | HỆ THỐNG QUẢN LÝ ĐIỀU PHỐI & PHÂN CÔNG</h2>
         <div>
-          <button onClick={() => setCurrentScreen(1)} style={{ marginüğüRight: '10px', padding: '6px 12px', background: currentScreen === 1 ? '#334e68' : '#243b53', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>1. Điều phối Ticket</button>
-          <button onClick={() => setCurrentScreen(2)} style={{ marginüğüRight: '10px', padding: '6px 12px', background: currentScreen === 2 ? '#334e68' : '#243b53', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>2. Lịch trình KTV</button>
+          <button onClick={() => setCurrentScreen(1)} style={{ marginRight: '10px', padding: '6px 12px', background: currentScreen === 1 ? '#334e68' : '#243b53', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>1. Điều phối Ticket</button>
+          <button onClick={() => setCurrentScreen(2)} style={{ marginRightt: '10px', padding: '6px 12px', background: currentScreen === 2 ? '#334e68' : '#243b53', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>2. Lịch trình KTV</button>
           <button onClick={() => setCurrentScreen(3)} style={{ padding: '6px 12px', background: currentScreen === 3 ? '#334e68' : '#243b53', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>3. Xác nhận KH</button>
         </div>
       </header>
