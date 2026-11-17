@@ -1,11 +1,14 @@
----
-```markdown
+
 
 | Bug ID | Module | Severity | Status | Summary |
-|---|---|---|---|---|
-| `BUG-001` | Database Seeding | Medium | Fixed | Non-idempotent `INSERT INTO` caused primary key collision on re-run |
-| `BUG-002` | Unit Testing (`pytest`) | Medium | Fixed | Error message mismatch between `AppointmentService` and `test_assign_technician_not_found` |
-| `BUG-003` | Cross-Origin / Containerization | High | Fixed | Browser blocked cross-origin `PUT` requests from port `5173` to `5000` without CORS headers |
+|:---:|---|:---:|:---:|---|
+| **BUG-001** | Database Seeding | Medium | ✅ Fixed | Non-idempotent `INSERT INTO` caused primary key collision on re-run. |
+| **BUG-002** | Unit Testing (`pytest`) | Medium | ✅ Fixed | Error message mismatch between `AppointmentService` and `test_assign_technician_not_found`. |
+| **BUG-003** | Cross-Origin / Containerization | High | ✅ Fixed | Browser blocked cross-origin `PUT` requests from port `5173` to `5000` without CORS headers. |
+
+---
+
+**Summary:** 3 bugs identified and fixed.
 
 ---
 
